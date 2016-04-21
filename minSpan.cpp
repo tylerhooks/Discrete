@@ -1,5 +1,4 @@
 // C++ program for Kruskal's algorithm to find Minimum Spanning Tree
-// of a given connected, undirected and weighted graph
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -140,26 +139,21 @@ void KruskalMST(struct Graph* graph)
 // Driver program to test above functions
 int main()
 {
-	/* Let us create following weighted graph
-			10
-		0--------1
-		| \	 |
-	6| 5\ |15
-		|	 \ |
-		2--------3
-			4	 */
-	int V = 4; // Number of vertices in graph
-	int E = 5; // Number of edges in graph
+	ifstream fin;
+	fin.open("k_33.txt");
+	
+	int V;// = 4; // Number of vertices in graph
+	int E;// = 5; // Number of edges in graph
 	struct Graph* graph = createGraph(V, E);
 
-	//ifstream infile("k_33.txt");
+	
 
 	// add edge 0-1
-	graph->edge[0].dest = 1;
-	graph->edge[0].weight = 10;
+	/*graph->edge[0].dest = 1;
+	graph->edge[0].weight = 10;*/ 
 
 	// add edge 0-2
-	graph->edge[1].src = 0;
+	/*graph->edge[1].src = 0;
 	graph->edge[1].dest = 2;
 	graph->edge[1].weight = 6;
 
@@ -176,7 +170,7 @@ int main()
 	// add edge 2-3
 	graph->edge[4].src = 2;
 	graph->edge[4].dest = 3;
-	graph->edge[4].weight = 4;
+	graph->edge[4].weight = 4;*/ 
 
 	KruskalMST(graph);
 
