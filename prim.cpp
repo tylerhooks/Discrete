@@ -3,63 +3,97 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
+#include "prim.h"
 
-using namespace std; 
+using namespace std;
 
-int minIncident(vector< vector<int> > edgeSet, int vert, int e);
+int minIncident(vector< vector<int> > edgeSet, int , int m){
+ 	vector <int> edge;
+  	int index = 0;
+  	int cost;
+  	
+  	for(int i = 0; i < m; i++){
+    if(k==edgeSet[i][0] || k == edgeSet[i][1]){
+      edge.push_back(i);
 
-int main(){
+     }
 
-	ifstream infile("exampleWG.txt");//opening text file
+   }
 
-	//error handleing
-	if(!infile){
+	cout << "The edges incident with VH are  " << endl;
 
-		cout<<"file could not be opened."<<endl;
-	} 
+	for(int i = 0; i < edge.size(); i++){
+    cout << "edge " << edgeSet[edge[i]][0] << " " <<edgeSet[edge[i]][1] << " with cost "<< edgeSet[edge[i]][2] << endl;
+  	}
 
-	int vert, e, edge; 
-
-	infile >> vert; // Reads in the number of vertices. 
-	infile >> e; // Reads in the number of edges. 
-
-    // Check that the order of the graph is correct
-    cout <<"The order of the graph is "<< vert << endl;
-
-	// Check that the size of the graph is correct
-    cout <<"The size of the graph is " <<  e << endl;
-
-    vector <vector<int> > edgeSet;// 2-D vector that stores the edges
-  	// [[row 1], [row 2], ..., [row m]]
-	
-
-	for(int i =0; i < vert; i++){
-		vector<int> row; 
-			for(int j = 0; j < 3; j++){
-				row.push_back(edge); //add a new element to the vector each time a new integer is read
-			}
-
-			edgeSet.push_back(row);// adds row to the vector
-		}
+  	cost = edgeSet[edge[0]][2];
 
 
-	
-	vector <int> treeVert; // vertex of tree
-	vector <vector<int>> treeSet; // the edge set of the tree
+  	for(int i = 1; i < edge.size(); i++){
+   	 if(edgeSet[edge[i]][2] < cost){
+     	 cost = edgeSet[edge[i]][2];
+      	 index = i;
+    }
+  }
 
-	int edge1 = minIncident(edgeSet, treeVert[0], e);
+ index = edge[index];
+ return index; 
+}
+int addVertex(vector<vector<int> >edgeSet, vector<vector<int> > T, vector<int> VH){
+  int addVertex;
+  int dontAdd = VH[0];
 
-	treeVert.push_back(0);// initialize vertex set of tree to 0
-	treeSet.push_back(edgeSet[edge1]);
+  if(dontAdd == T[0][0]){
+    addVertex = T[0][1];
+  }
+  else if(dontAdd == T[0][1]){
+      addVertex = T[0][0];
+  }
 
-	int vertex = addVertex(edgeSet, treeSet, treeVert); 
-	treeSet.push_back(vertex);
 
-	for(int i = 0; i<treeSet.size(); i++){
-		cout<< treeSet[i]<<endl; 
-	}
+  return addVertex;
+}
+int minIncidentSet(vector<vector<int> > edgeSet, vector<int> VH, int m){
 
-	
-	return 0; 
+	vector <int> edge;
+  int index = 0;
+  int cost;
+  
+  for(int j = 0; j < VH.size();j++)
+  {
+    for(int i = 0; i < m; i++)
+    {
+      /*cout << "VH[ " << j <<" ] == edgeSet[" << i<< " ][0] && VH[j] != edgeSet[i][1]" << endl;*/
+      if((VH[j] == edgeSet[i][0] && VH[j] != edgeSet[i][1]) ||
+     (VH[j] != edgeSet[i][0] && VH[j] == edgeSet[i][1]))
+    {
+      edge.push_back(i);
+    }
+    }
+  }
 
+
+  cout << "The edges incident with VH are  " << endl;
+
+
+  for(int i = 0; i < edge.size(); i++){
+    cout << "edge " << edgeSet[edge[i]][0] << " " <<edgeSet[edge[i]][1] << " with cost "<< edgeSet[edge[i]][2] << endl;
+  }
+
+  cost = edgeSet[edge[0]][2];
+
+
+  for(int i = 1; i < edge.size(); i++){
+    if(edgeSet[edge[i]][2] < cost){
+      cost = edgeSet[edge[i]][2];
+      index = i;
+    }
+  }
+
+
+ cout <<"Edge " <<  edge[index] <<" with cost "<< cost << endl;
+
+ // cout <<"We add vertex " << edgeSet[edge[index]][0]<< endl;
+ index = edge[index];
+ return index; 
 }
